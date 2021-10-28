@@ -23,6 +23,9 @@ class RemoveCommand(InstallerCommand):
             "Output the operations but do not execute anything "
             "(implicitly enables --verbose).",
         ),
+        option(
+            "first-match", None, "Use first package found instead of browsing all repos"
+        ),
     ]
 
     help = """The <info>remove</info> command removes a package from the current
@@ -107,6 +110,7 @@ list of installed packages
         self._installer.dry_run(self.option("dry-run"))
         self._installer.verbose(self._io.is_verbose())
         self._installer.update(True)
+        self._installer.first_match(self.option("first-match"))
         self._installer.whitelist(removed)
 
         status = self._installer.run()

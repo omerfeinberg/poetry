@@ -2207,6 +2207,55 @@ def test_solver_does_not_choose_from_secondary_repository_by_default(
     assert ops[1].package.source_url is None
     assert "http://legacy.foo.bar" == ops[2].package.source_url
 
+    # def test_solver_does_not_search_secondary_repo_with_first_match_flag(
+    #     package, installed, locked, io, mocker
+    # ):
+    #     package.python_versions = "^3.7"
+    #     package.add_dependency(Factory.create_dependency("clikit", {"version": "^0.2.0"}))
+    #
+    #     pool = Pool()
+    #     mock_pypi_repo, mock_legacy_repo = MockPyPIRepository(), MockLegacyRepository()
+    #     pool.add_repository(mock_legacy_repo, secondary=True)
+    #     pool.add_repository(mock_pypi_repo, default=True)
+    #     pool.first_match = False
+    #
+    #     solver = Solver(package, pool, installed, locked, io)
+    #
+    #     mocker.patch.object(mock_legacy_repo, "find_packages")
+    #     transaction = solver.solve()
+    #
+    #     ops = check_solver_result(
+    #         transaction,
+    #         [
+    #             {
+    #                 "job": "install",
+    #                 "package": Package(
+    #                     "pastel",
+    #                     "0.1.0",
+    #                     source_type="legacy",
+    #                     source_url="http://legacy.foo.bar",
+    #                     source_reference="legacy",
+    #                 ),
+    #             },
+    #             {"job": "install", "package": get_package("pylev", "1.3.0")},
+    #             {
+    #                 "job": "install",
+    #                 "package": Package(
+    #                     "clikit",
+    #                     "0.2.4",
+    #                     source_type="legacy",
+    #                     source_url="http://legacy.foo.bar",
+    #                     source_reference="legacy",
+    #                 ),
+    #             },
+    #         ],
+    #     )
+
+    # assert "http://legacy.foo.bar" == ops[0].package.source_url
+    # assert ops[1].package.source_type is None
+    # assert ops[1].package.source_url is None
+    # assert ops[2].package.source_url is None  # PypiRepository
+
 
 def test_solver_chooses_from_secondary_if_explicit(package, installed, locked, io):
     package.python_versions = "^3.7"

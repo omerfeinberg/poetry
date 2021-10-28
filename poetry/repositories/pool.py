@@ -27,6 +27,7 @@ class Pool(BaseRepository):
         self._default = False
         self._has_primary_repositories = False
         self._secondary_start_idx = None
+        self._first_match = False
 
         for repository in repositories:
             self.add_repository(repository)
@@ -38,6 +39,14 @@ class Pool(BaseRepository):
     @property
     def repositories(self) -> List[Repository]:
         return self._repositories
+
+    @property
+    def first_match(self) -> bool:
+        return self._first_match
+
+    @first_match.setter
+    def first_match(self, first_match: bool):
+        self._first_match = first_match
 
     def has_default(self) -> bool:
         return self._default
@@ -168,6 +177,8 @@ class Pool(BaseRepository):
 
         packages = []
         for repo in self._repositories:
+            if packages and self.first_match:
+                break
             packages += repo.find_packages(dependency)
 
         return packages

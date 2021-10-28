@@ -18,6 +18,9 @@ class LockCommand(InstallerCommand):
             "Check that the <comment>poetry.lock</> file corresponds to the current version "
             "of <comment>pyproject.toml</>.",
         ),
+        option(
+            "first-match", None, "Use first package found instead of browsing all repos"
+        ),
     ]
 
     help = """
@@ -43,5 +46,5 @@ file.
             )
 
         self._installer.lock(update=not self.option("no-update"))
-
+        self._installer.first_match(self.option("first-match"))
         return self._installer.run()

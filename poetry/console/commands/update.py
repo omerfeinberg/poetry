@@ -23,6 +23,9 @@ class UpdateCommand(InstallerCommand):
             "(implicitly enables --verbose).",
         ),
         option("lock", None, "Do not perform operations (only update the lockfile)."),
+        option(
+            "first-match", None, "Use first package found instead of browsing all repos"
+        ),
     ]
 
     loggers = ["poetry.repositories.pypi_repository"]
@@ -42,6 +45,7 @@ class UpdateCommand(InstallerCommand):
 
         self._installer.dry_run(self.option("dry-run"))
         self._installer.execute_operations(not self.option("lock"))
+        self._installer.first_match(self.option("first-match"))
 
         # Force update
         self._installer.update(True)

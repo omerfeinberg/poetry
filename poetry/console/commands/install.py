@@ -67,6 +67,9 @@ class InstallCommand(InstallerCommand):
             flag=False,
             multiple=True,
         ),
+        option(
+            "first-match", None, "Use first package found instead of browsing all repos"
+        ),
     ]
 
     help = """The <info>install</info> command reads the <comment>poetry.lock</> file from
@@ -158,6 +161,7 @@ dependencies and not including the current project, run the command with the
         self._installer.dry_run(self.option("dry-run"))
         self._installer.requires_synchronization(with_synchronization)
         self._installer.verbose(self._io.is_verbose())
+        self._installer.first_match(self.option("first-match"))
 
         return_code = self._installer.run()
 

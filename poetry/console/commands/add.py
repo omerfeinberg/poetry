@@ -57,6 +57,9 @@ class AddCommand(InstallerCommand, InitCommand):
             "Output the operations but do not execute anything (implicitly enables --verbose).",
         ),
         option("lock", None, "Do not perform operations (only update the lockfile)."),
+        option(
+            "first-match", None, "Use first package found instead of browsing all repos"
+        ),
     ]
     help = (
         "The add command adds required packages to your <comment>pyproject.toml</> and installs them.\n\n"
@@ -218,6 +221,7 @@ class AddCommand(InstallerCommand, InitCommand):
         self._installer.dry_run(self.option("dry-run"))
         self._installer.verbose(self._io.is_verbose())
         self._installer.update(True)
+        self._installer.first_match(self.option("first-match"))
         if self.option("lock"):
             self._installer.lock()
 

@@ -57,6 +57,7 @@ class Installer:
         self._without_groups = None
         self._with_groups = None
         self._only_groups = None
+        self._fallback = False
 
         self._execute_operations = True
         self._lock = False
@@ -112,6 +113,13 @@ class Installer:
         local_repo = Repository()
 
         return self._do_install(local_repo)
+
+    def first_match(self, first_match=False) -> "Installer":
+        self._pool.first_match = first_match
+        return self
+
+    def is_first_match(self) -> bool:
+        return self._pool.first_match
 
     def dry_run(self, dry_run: bool = True) -> "Installer":
         self._dry_run = dry_run
